@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ICSE Running Map</title>
+
+    <style type="text/css">
+      /* Set the size of the div element that contains the map */
+      #map {
+        width: 1280px;
+        height: 720px;
+      }
+    </style>
+    <script>
+      // Initialize and add the map
+      function initMap() {
+        // The map, centered at Uluru
+        const barcelona = {lat:41.3948491,lng:2.1137486}
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 2,
+          center: barcelona,
+          mapTypeId: "hybrid"
+        });
+
+		function getMark(size) {
+			return{
+		    path:google.maps.SymbolPath.CIRCLE,
+		    fillColor: "yellow",
+		    fillOpacity: 1,
+		    strokeColor: "black",
+		    strokeWeight: 1,
+		    scale: size,
+			};
+		}
+
+		function round(num, r) {
+			return Math.round(num / r) * r
+		}
+
+		mark1 = getMark(2)
+		mark2 = getMark(3)
+		mark3 = getMark(5)
+
+        // The location of Uluru
+        places = [
+        	{ lat: -25.344, lng: 131.036 }, // uluru
+        	{ lat: 41.3948491, lng:2.1137486}, // barcelona
+        ]
+
+        for(i = 0; i < 200; i++) {
+        	places.push({
+        		lat: round(Math.random()*180-90, 7),
+        		lng: round(Math.random()*360-180, 7),
+        	})
+        }
+
+        places.forEach(place => {
+            const marker = new google.maps.Marker({
+	          position: place,
+	          map: map,
+	          icon: getMark(Math.round(Math.random()*7)+3)
+	        });
+        })
+
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN1E-j_kqI8YYbi5jH9FJ3tgon8FgVyI4&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+  </body>
+</html>
